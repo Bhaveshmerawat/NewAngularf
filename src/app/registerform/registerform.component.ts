@@ -13,7 +13,8 @@ export class RegisterformComponent implements OnInit {
 
   registerForm!: FormGroup;
   user: any = {};
-
+  alert: boolean = false;
+  test: any = {};
 
 
   constructor(
@@ -21,38 +22,60 @@ export class RegisterformComponent implements OnInit {
     private userdata: UserdataService,
     private router: Router,
     private EncrDecr: EncrDecrService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.createRegisterForm();
-    var encrypted = this.EncrDecr.set('123456$#@$^@1ERF', 'password@123456');
-    var decrypted = this.EncrDecr.get('123456$#@$^@1ERF', encrypted);
   }
 
   createRegisterForm() {
     this.registerForm = new FormGroup({
-      'firstname': new FormControl('', [Validators.required]),
-      'lastname': new FormControl('', [Validators.required]),
-      'mo': new FormControl(""),
-      'mail': new FormControl('', [Validators.required, Validators.email]),
-      'password': new FormControl('', [Validators.required])
+      'name': new FormControl('', [Validators.required]),
+      'username': new FormControl('', [Validators.required]),
+      'phone': new FormControl(""),
+      'email': new FormControl('', [Validators.required, Validators.email]),
+      'website': new FormControl('', [Validators.required])
     })
   }
 
-  get f() {
+  //get the value of register form by this meyhod
+  get valueOfuser() {
     return this.registerForm.controls;
   }
+
+  // naviagte to loginform
   gotoList() {
     this.router.navigate(['/login']);
   }
 
+  //get user value and update on service post api
+  updateUser() {
+    this.user = Object.assign(this.user, this.registerForm.value); // get the value of user
+    // this.userdata.addUser(this.user)  // post the user data to service
+    this.userdata.saveUser(this.user).subscribe((result: any) => {
+      console.log("result", result)
+    })
+  }
+
+  // hide Alert message
+  closeAlert() {
+    this.alert = false;
+  }
+
   onSubmit() {
-    if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
-      this.user = Object.assign(this.user, this.registerForm.value);
-      this.userdata.addUser(this.user)
-      this.registerForm.reset();
-      this. gotoList();
+    if (this.registerForm.valid) { // check the form is validete or not ..?
+      // console.log(this.registerForm.value); // print the value of user in console
+      //  this.user = Object.assign(this.user, this.registerForm.value); // get the value of user
+      //  this.userdata.addUser(this.user)  // post the user data to service
+      // debugger
+      // const decrypted = this.EncrDecr.get('user', encrypted); // decrypt the encrypted value
+      // console.log(JSON.parse(decrypted)); // print on console the value
+      this.updateUser(); // function call on submit of user
+      this.alert = true; // show alert modal for success message
+      this.registerForm.reset(); // reset the form
+      const encrypted = this.EncrDecr.set('user', JSON.stringify(this.registerForm.value));  //encryp the form value
+      //  console.log(encrypted);   print the value
+      //  this.gotoList(); // navigate to link
     } else {
       // validate all form fields
       alert("Please fill validate all form fields")

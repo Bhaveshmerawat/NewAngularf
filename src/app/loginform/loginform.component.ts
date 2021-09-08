@@ -19,7 +19,7 @@ export class LoginformComponent implements OnInit {
 
   createLoginForm() {
     this.loginForm = new FormGroup({
-      'mail': new FormControl('', [Validators.required, Validators.email]),
+      'username': new FormControl('', [Validators.required, Validators.email]),
       'password': new FormControl('', [Validators.required])
     })
   }

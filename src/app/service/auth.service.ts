@@ -10,7 +10,6 @@ export class AuthService {
   constructor() { }
 
   authUser(user: any) {
-    debugger
     let UserArry = [];
     if (localStorage.getItem('users')) {
       UserArry = JSON.parse(localStorage.getItem('users') || '{}');
