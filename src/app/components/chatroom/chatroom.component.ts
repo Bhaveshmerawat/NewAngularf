@@ -1,9 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import * as firebase from 'firebase/compat';
 import { AuthServiceService } from 'src/app/service/auth-service.service';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { ActivatedRoute, Router } from '@angular/router';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-chatroom',
@@ -17,6 +16,7 @@ export class ChatroomComponent implements OnInit {
     private router: Router,
     public datepipe: DatePipe) {
     this.name = localStorage.getItem('name');
+    console.log(firebase.firestore().collection('users'))
     // firebase.database().ref('rooms/').on('value', resp => {
     //   this.rooms = [];
     //   // this.rooms = snapshotToArray(resp);

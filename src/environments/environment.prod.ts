@@ -1,8 +1,9 @@
 export const environment = {
   production: true,
-  firebaseConfig : {
+  firebaseConfig: {
     apiKey: "AIzaSyCYFSnp1QHiPkqdOUvsJwToH5MVZxiNANE",
     authDomain: "healthangular.firebaseapp.com",
+    databaseURL: "https://healthangular-default-rtdb.firebaseio.com",
     projectId: "healthangular",
     storageBucket: "healthangular.appspot.com",
     messagingSenderId: "683141185678",

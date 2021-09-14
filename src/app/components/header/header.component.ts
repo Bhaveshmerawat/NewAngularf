@@ -8,10 +8,11 @@ import { AuthServiceService } from 'src/app/service/auth-service.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  isSignedIn = true
+  isSignedIn: boolean = false;
   constructor(private firebaseService: AuthServiceService, private router: Router) { }
 
   ngOnInit(): void {
+    this.isSignedIn = localStorage.getItem('user') ? true : false;
   }
 
   logOutSec() {

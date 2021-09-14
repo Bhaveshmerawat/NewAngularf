@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -25,6 +25,7 @@ export class AuthServiceService {
   async signup(email: string, password: string) {
     await this.firebaseAuth.createUserWithEmailAndPassword(email, password)
       .then(res => {
+        console.log(res);
         this.isLoggedIn = true
         localStorage.setItem('user', JSON.stringify(res.user))
       })
