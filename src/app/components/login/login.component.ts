@@ -33,13 +33,15 @@ export class LoginComponent implements OnInit {
     this.firebaseService.signin(this.loginForm.value.email, this.loginForm.value.password)
     if(this.firebaseService.isLoggedIn){
       this.isSignedIn = true;
-      alert("congratulation successfully login");
+      let role = "admin"
+      if(role == 'admin')
+        this.router.navigateByUrl('/admin');
+      else
       this.router.navigateByUrl('/home');
+      alert("congratulation successfully login");
       console.log("success")
     } else {
       alert ("Please enter valid email and password")
     }
-
   }
-
 }

@@ -15,6 +15,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { ChatroomComponent } from './components/chatroom/chatroom.component';
+import { AdminComponent } from './admin/admin.component';
 // import { AngularFireModule } from "@angular/fire";
 // import { AngularFirestoreModule } from "@angular/fire/firestore";
 
@@ -28,6 +29,7 @@ import { ChatroomComponent } from './components/chatroom/chatroom.component';
     SignupComponent,
     HeaderComponent,
     ChatroomComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
