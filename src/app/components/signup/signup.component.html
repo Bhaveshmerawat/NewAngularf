@@ -1,0 +1,40 @@
+<section class="position-relative w-100">
+  <div class="container">
+    <div class="row">
+      <div class="user signupBx">
+        <div class="formBx">
+          <div *ngIf="alert" class="alert alert-success alert-dismissible fade show w-100 p-3 mb-3"  role="alert">
+            <strong>Hay!</strong> Your data has been successfully register.
+            <button type="button" (click)="alertClose()" class="btn-close" data-bs-dismiss="alert"
+              aria-label="Close"></button>
+          </div>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <h2>Create an account</h2>
+            <input type="text" formControlName="username" placeholder="Username" />
+            <span class="help-block text-danger" *ngIf="inputValue.username.touched && inputValue.username.invalid">
+              Please Enter Your Name!
+            </span>
+            <input type="email" formControlName="email" placeholder="Email Address" />
+            <span class="help-block text-danger" *ngIf="inputValue.email.touched && inputValue.email.invalid">
+              Please Enter Your Name!
+            </span>
+            <input type="password" formControlName="password" placeholder="Create Password" />
+            <input type="password" formControlName="conformpassword" placeholder="Confirm Password" />
+            <input type="submit" name="" value="Sign Up" />
+            <p class="signup">
+              Already have an account ?
+              <a routerLink="/login" routerLinkActive="active">Sign in.</a>
+            </p>
+          </form>
+        </div>
+        <div class="imgBx">
+          <!-- <img
+            src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Login%20and%20Registration%20Form/img2.jpg"
+            alt="" /> -->
+          <img src="../../../assets/banner-img.jpg">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
