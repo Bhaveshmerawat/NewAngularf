@@ -1,22 +1,4 @@
 
-// export interface LoggedInUser {
-//   id: number;
-//   email: string;
-//   Name: string;
-//   role: LoggedInUserRole;
-//   userType: LoggedInUserType;
-// }
-
-// export interface LoggedInUserRole {
-// id: number;
-// role: string;
-// }
-
-
-// export interface LoggedInUserType {
-//   id: number;
-//   name: string;
-// }
 
 
 export interface Roles {
@@ -28,5 +10,8 @@ export interface Roles {
 export interface User {
   uid: string;
   email: string;
+  // displayName: string;
+  // photoURL: string;
+  // emailVerified: boolean;
   roles: Roles;
 }

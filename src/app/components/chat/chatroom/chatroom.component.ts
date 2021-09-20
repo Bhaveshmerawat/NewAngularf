@@ -10,6 +10,7 @@ import * as firebase from 'firebase';
   styleUrls: ['./chatroom.component.scss']
 })
 export class ChatroomComponent implements OnInit {
+
   name: any;
   constructor(
     private route: ActivatedRoute,
@@ -26,5 +27,4 @@ export class ChatroomComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

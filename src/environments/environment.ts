@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  API_URL: 'https://healthangular-default-rtdb.firebaseio.com',
   firebaseConfig: {
     apiKey: "AIzaSyCYFSnp1QHiPkqdOUvsJwToH5MVZxiNANE",
     authDomain: "healthangular.firebaseapp.com",

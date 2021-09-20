@@ -14,11 +14,13 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
-import { ChatroomComponent } from './components/chatroom/chatroom.component';
 import { AdminComponent } from './admin/admin.component';
-// import { AngularFireModule } from "@angular/fire";
-// import { AngularFirestoreModule } from "@angular/fire/firestore";
-
+import { RoomlistComponent } from './components/chat/roomlist/roomlist.component';
+import { AddroomComponent } from './components/chat/addroom/addroom.component';
+import { ChatroomComponent } from "./components/chat/chatroom/chatroom.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DatePipe } from '@angular/common';
+import { AuthServiceService } from './service/auth-service.service';
 
 
 @NgModule({
@@ -28,8 +30,19 @@ import { AdminComponent } from './admin/admin.component';
     LoginComponent,
     SignupComponent,
     HeaderComponent,
-    ChatroomComponent,
     AdminComponent,
+    RoomlistComponent,
+    ChatroomComponent,
+    AddroomComponent,
+    // MatInputModule,
+    // MatIconModule,
+    // MatCardModule,
+    // MatFormFieldModule,
+    // MatTableModule,
+    // MatProgressSpinnerModule,
+    // MatSortModule,
+    // MatSnackBarModule,
+    // MatSidenavModule
   ],
   imports: [
     BrowserModule,
@@ -41,7 +54,9 @@ import { AdminComponent } from './admin/admin.component';
     AngularFireAuthModule,
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    BrowserAnimationsModule,
   ],
+  providers: [DatePipe,AuthServiceService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
