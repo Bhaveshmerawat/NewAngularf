@@ -1,128 +1,95 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/firestore";
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/firestore";
 import { Router, CanActivate } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { first, switchMap } from "rxjs/operators";
+import { first, map, switchMap } from "rxjs/operators";
 import { User } from '../models/User.model';
 import * as firebase from 'firebase';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthServiceService {
 
-  isLoggedIn: boolean = false
-  user$: Observable<any>;
-  // userData: any;
-  user: any
+  isSignedIn: any = new EventEmitter<boolean>();
+  chatRoomDetails: any = new EventEmitter<any>();
+  usersRef: any = firebase.firestore().collection('users');
+  chatRef: any = firebase.firestore().collection('chatrooms');
 
   constructor(
     public afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router) {
-    // Get Auth data then get firestore user document || null
-    this.user$ = this.afAuth.authState
-    switchMap((user: any) => {
-      if (user) {
-        return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-      } else {
-        return of(null);
-      }
-    })
-  }
+    private router: Router,
+    private http: HttpClient) { }
 
   // for signin user
-  async signin(email: string, password: string) {
-    await this.afAuth.signInWithEmailAndPassword(email, password)
-      .then(res => {
-        console.log(res);
-        this.isLoggedIn = true
-        localStorage.setItem('user', JSON.stringify(res.user))
-      })
+  signin(email: string, password: string) {
+    firebase.auth().signInWithEmailAndPassword(email, password).then((response: any) => {
+      this.getCurrentUserData(response.user.uid);
+      alert("congratulation successfully login");
+    }, (error) => { alert(error.message) });
   }
 
   // for register user
-  async signup(email: string, password: string) {
-    await this.afAuth.createUserWithEmailAndPassword(email, password)
-      .then(res => {
-        console.log(res);
-        this.isLoggedIn = true
-        localStorage.setItem('user', JSON.stringify(res.user))
-      })
+  signup(userData: User) {
+    firebase.auth().createUserWithEmailAndPassword(userData.email, userData.password)
+      .then((res: any) => {
+        this.setUserData(userData, res.user.uid);
+      });
   }
 
+  getCurrentUserData(uid: string) {
+    this.usersRef.doc(uid).get().then((snapshot: any) => {
+      if (snapshot.exists) {
+        localStorage.setItem('user', JSON.stringify(snapshot.data()));
+        this.isSignedIn.emit(true);
+        const path = (snapshot.data().role == 'admin') ? '/admin' : '/user';
+        this.router.navigateByUrl(path);
+      }
+    });
+  }
+
+  firestoreSnapshotToArray(snapshot: any) {
+    const returnArr: any = [];
+    snapshot.forEach((doc: any) => {
+      const data: any = doc.data();
+      data.key = doc.id;
+      returnArr.push(data);
+    });
+    return returnArr;
+  }
 
   // for logout
   async logout() {
-    await this.afAuth.signOut()
-    localStorage.removeItem('user');
-    this.router.navigateByUrl('/login');
+    await firebase.auth().signOut().then(() => {
+      localStorage.removeItem('user');
+      this.router.navigateByUrl('/login');
+    });
   }
 
-  // getUser() {
-  //   return this.user$.pipe(first()).toPromise();
-  //  // return this.http.get(this.user$)
-  // }
-
-  // updateUserData(user: { uid: any; email: any; }) {
-  //   const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-  //   const data: User = {
-  //     uid: user.uid,
-  //     email: user.email,
-  //     roles: {
-  //       subscriber: true
-  //     },
-  //   }
-  //   return userRef.set(data, {
-  //     merge: true
-  //   })
-  // }
-
-  // checkAuthorization(user: User, allowedRoles: []): boolean {
-  //   if (!user) return false
-  //   for (const role of allowedRoles) {
-  //     if (user.roles[role]) {
-  //       return true
-  //     }
-  //   }
-  //   return false
-  // }
-
-  // canRead(user: User) :boolean {
-  //   const allowed =['admin','editor','subscriber']
-  //   return this.checkAuthorization(user, allowed)
-  // }
-  // canEdit(user:User) : boolean {
-  //   const allowed =['admin']
-  //     return this.checkAuthorization(user, allowed)
-  // }
-
-
-  getUserProfile() {
-    const user = firebase.auth().currentUser;
-    if (user !== null) {
-      // The user object has basic properties such as display name, email, etc.
-      const displayName = user.displayName;
-      const email = user.email;
-      const photoURL = user.photoURL;
-      const emailVerified = user.emailVerified;
-      const uid = user.uid;
-    }
+  // add user data in firestore after signup
+  setUserData(user: any, uid: string) {
+    this.usersRef.doc(uid).set({
+      uid: uid,
+      email: user.email,
+      phone: user.phone,
+      name: user.name,
+      password: user.password,
+      role: 'user'
+    });
   }
 
-  updateUserProfile() {
-    const user = firebase.auth().currentUser;
+  getUserFromLocal() {
+    return (
+      localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '{}') : ''
+    );
+  }
 
-    user.updateProfile({
-      displayName: "Jane Q. User",
-      photoURL: "https://example.com/jane-q-user/profile.jpg"
-    }).then(() => {
-      // Update successful
-      // ...
-      alert("name has been changes")
-    }).catch((error) => {
-      console.log("proffile not updated")
+  getChatroomData() {
+    this.chatRef.get().then((snapshot: any) => {
+     this.chatRoomDetails.emit(this.firestoreSnapshotToArray(snapshot));
     });
   }
 }

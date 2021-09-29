@@ -21,6 +21,7 @@ import { ChatroomComponent } from "./components/chat/chatroom/chatroom.component
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 import { AuthServiceService } from './service/auth-service.service';
+import { UserComponent } from './components/user/user.component';
 
 
 @NgModule({
@@ -34,15 +35,7 @@ import { AuthServiceService } from './service/auth-service.service';
     RoomlistComponent,
     ChatroomComponent,
     AddroomComponent,
-    // MatInputModule,
-    // MatIconModule,
-    // MatCardModule,
-    // MatFormFieldModule,
-    // MatTableModule,
-    // MatProgressSpinnerModule,
-    // MatSortModule,
-    // MatSnackBarModule,
-    // MatSidenavModule
+    UserComponent
   ],
   imports: [
     BrowserModule,

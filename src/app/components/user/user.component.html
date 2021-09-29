@@ -1,0 +1,35 @@
+<!-- <p>user works!</p> -->
+<div class="container">
+  <div class="col-md-12">
+    <h2>Send request to join the group</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>
+            Sr. No.
+          </th>
+          <th>
+            Group Name
+          </th>
+          <th>
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let list of chatroom">
+          <!-- {{list | json}} -->
+          <td>
+            {{list.key}}
+          </td>
+          <td>
+            <span>{{list.roomName | json}}</span>
+          </td>
+          <td>
+            <button class="btn btn-info" (click)="sendRequest(list)"> {{selectedButton[list.key] ? ' Requested' : 'Request'}}</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

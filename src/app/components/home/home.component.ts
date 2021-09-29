@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { snapshotChanges } from '@angular/fire/database';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthServiceService } from '../../service/auth-service.service';
@@ -9,9 +10,7 @@ import { AuthServiceService } from '../../service/auth-service.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  collection: any;
-  userDetail: any;
-
+  user: any;
   constructor(
     private formBuilder: FormBuilder,
     private firebaseService: AuthServiceService,
@@ -19,14 +18,10 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-   // this.getUsersData();
+    this.user = this.firebaseService.getUserFromLocal()
+    console.log(this.user)
   }
-
-  // getUsersData(): void {
-  //   this.firebaseService.getUser().subscribe((result) => {
-  //     // console.log(result)
-  //     this.collection = result;
-  //   })
-
-  // }
+  signOut() {
+    this.firebaseService.logout()
+  }
 }

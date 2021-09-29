@@ -10,16 +10,16 @@
           </div>
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <h2>Create an account</h2>
-            <input type="text" formControlName="username" placeholder="Username" />
-            <span class="help-block text-danger" *ngIf="inputValue.username.touched && inputValue.username.invalid">
+            <input type="text" formControlName="name" placeholder="name" />
+            <span class="help-block text-danger" *ngIf="inputValue.name.touched && inputValue.name.invalid">
               Please Enter Your Name!
             </span>
             <input type="email" formControlName="email" placeholder="Email Address" />
             <span class="help-block text-danger" *ngIf="inputValue.email.touched && inputValue.email.invalid">
-              Please Enter Your Name!
+              Please Enter email Your Name!
             </span>
             <input type="password" formControlName="password" placeholder="Create Password" />
-            <input type="password" formControlName="conformpassword" placeholder="Confirm Password" />
+            <input type="password" formControlName="phone" placeholder="Confirm Password" />
             <input type="submit" name="" value="Sign Up" />
             <p class="signup">
               Already have an account ?

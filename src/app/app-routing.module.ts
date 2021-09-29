@@ -5,6 +5,7 @@ import { ChatroomComponent } from './components/chat/chatroom/chatroom.component
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { UserComponent } from './components/user/user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -12,8 +13,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'admin', component: AdminComponent },
+  { path: 'user', component: UserComponent },
   { path: 'chats/:id', component: ChatroomComponent }
-
 ];
 
 @NgModule({

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators,Form } from '@angular/forms';
-import { AuthServiceService } from 'src/app/service/auth-service.service';
+//import { AuthServiceService } from 'src/app/service/auth-service.service';
 import {Router} from '@angular/router';
+import { AuthServiceService } from 'src/app/service/auth-service.service';
 
 @Component({
   selector: 'app-signup',
@@ -24,9 +25,9 @@ export class SignupComponent implements OnInit {
 
   createRegForm() {
     this.registerForm = new FormGroup({
-      'username': new FormControl('', [Validators.required]),
+      'name': new FormControl('', [Validators.required]),
       'email': new FormControl('', [Validators.required, Validators.email]),
-      'conformpassword': new FormControl('', [Validators.required]),
+      'phone': new FormControl('', [Validators.required]),
       'password': new FormControl('', [Validators.required, Validators.minLength(6)])
     })
   }
@@ -40,14 +41,9 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-    debugger
     if (this.registerForm.valid) {
       this.alert = true;
-      this.firebaseService.signup(this.registerForm.value.email, this.registerForm.value.password)
-      if(this.firebaseService.isLoggedIn){
-        this.isSignedIn = true;
-        this.router.navigateByUrl('/home');
-      }
+      this.firebaseService.signup(this.registerForm.value);
     } else {
       alert("Please fill all fields")
     }

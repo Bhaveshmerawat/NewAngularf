@@ -21,14 +21,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.createLoginForm();
-    // this.subscriptions.push(
-    //   this.firebaseService.currentUser.subscribe((user: any) => {
-    //     if (!!user) {
-    //       this.router.navigateByUrl('/chat');
-    //     }
-    //   })
-    // );
-
   }
 
   createLoginForm() {
@@ -39,40 +31,10 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log(this.loginForm.value);
-  //  this.firebaseService.signin(this.loginForm.value.email, this.loginForm.value.password)
     if (this.loginForm.valid) {
-      debugger
-      this.firebaseService.signin(this.loginForm.value.email, this.loginForm.value.password)
-      this.isSignedIn = true;
-      if (this.role == 'admin')
-        this.router.navigateByUrl('/admin');
-      else
-        this.router.navigateByUrl('/home');
-      alert("congratulation successfully login");
-      console.log("success")
+      this.firebaseService.signin(this.loginForm.value.email, this.loginForm.value.password);
     } else {
       alert("Please enter valid email and password")
     }
-
-    // if (this.loginForm.valid) {
-    //   this.firebaseService.isLoggedIn
-    //   const { email, password } = this.loginForm.value;
-
-    //   // TODO call the auth service
-    //   this.subscriptions.push(
-    //     this.firebaseService.signin(email, password).subscribe((success: any) => {
-    //       if (success) {
-    //         this.router.navigateByUrl('/home');
-    //       } else {
-
-    //       }
-    //       this.firebaseService.isLoggedIn.next(false);
-    //     })
-    //   );
-    // } else {
-    //   this.firebaseService.isLoggedIn.next(false);
-    //   this.displayFailedLogin();
-    // }
   }
 }
