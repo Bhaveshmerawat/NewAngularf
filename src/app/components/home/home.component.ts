@@ -24,4 +24,5 @@ export class HomeComponent implements OnInit {
   signOut() {
     this.firebaseService.logout()
   }
+
 }
